@@ -24,5 +24,11 @@
     "background": {
         "{{chrome}}.service_worker": "src/background.js",
         "{{firefox}}.scripts": ["src/background.js"]
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "knownblackhat@gmail.com"
+        }
     }
+
 }
