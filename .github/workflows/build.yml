@@ -25,9 +25,6 @@ jobs:
       - name: Build extension
         run: npm run build
 
-      - name: Zip build directory
-        run: cd dist; zip -r -FS ../extension.xpi *
-
       # - name: Create Release
       #   id: create_release
       #   uses: actions/create-release@v1
@@ -44,6 +41,5 @@ jobs:
       - name: Upload xpi artifact
         uses: actions/upload-artifact@v3
         with:
-          name: extension.xpi
-          path: extension.xpi
+          path: 'dist/'
 
