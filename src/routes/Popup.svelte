@@ -1,6 +1,6 @@
 <script>
 	import browser from 'webextension-polyfill';
-	let links;
+	let links = [];
 
 	browser.runtime.onMessage.addListener((message) => {
 		if (message.action === 'update') {
