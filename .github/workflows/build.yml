@@ -3,7 +3,7 @@ name: Build and Deploy Extension
 on:
   push:
     branches:
-      - main  # Adjust this to your main branch name
+      - main # Adjust this to your main branch name
 
 jobs:
   build:
@@ -46,4 +46,3 @@ jobs:
         with:
           name: extension.xpi
           path: extension.xpi
-
