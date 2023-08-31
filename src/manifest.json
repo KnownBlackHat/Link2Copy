@@ -1,34 +1,33 @@
 {
-    "{{chrome}}.manifest_version": 3,
-    "{{firefox}}.manifest_version": 2,
-    "name": "Link2Copy",
-    "version": "1.0.0",
-    "description": "Extract media links from discord",
-    "icons": {
-        "16":  "logo.png",
-        "48":  "logo.png",
-        "128": "logo.png"
-    },
-    "{{chrome}}.action": {
-        "default_popup": "src/popup.html"
-    },
-    "{{firefox}}.browser_action": {
-        "default_popup": "src/popup.html"
-    },
-    "content_scripts": [
-        {
-            "matches": ["*://discord.com/channels/*"],
-            "js": ["src/background.js"]
-        }
-    ],
-    "background": {
-        "{{chrome}}.service_worker": "src/background.js",
-        "{{firefox}}.scripts": ["src/background.js"]
-    },
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "knownblackhat@gmail.com"
-        }
-    }
-
+	"{{chrome}}.manifest_version": 3,
+	"{{firefox}}.manifest_version": 2,
+	"name": "Link2Copy",
+	"version": "1.0.0",
+	"description": "Extract media links from discord",
+	"icons": {
+		"16": "logo.png",
+		"48": "logo.png",
+		"128": "logo.png"
+	},
+	"{{chrome}}.action": {
+		"default_popup": "src/popup.html"
+	},
+	"{{firefox}}.browser_action": {
+		"default_popup": "src/popup.html"
+	},
+	"content_scripts": [
+		{
+			"matches": ["*://discord.com/channels/*"],
+			"js": ["src/background.js"]
+		}
+	],
+	"background": {
+		"{{chrome}}.service_worker": "src/background.js",
+		"{{firefox}}.scripts": ["src/background.js"]
+	},
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "knownblackhat@gmail.com"
+		}
+	}
 }
