@@ -115,8 +115,9 @@
 				</button>
 			</div>
 		{/if}
-	{:catch}
+	{:catch e}
 		<div class="text-center text-red-600">
+        {e}
 			Only works on <a href="https://discord.com/channels/@me">Discord</a>
 		</div>
 	{/await}

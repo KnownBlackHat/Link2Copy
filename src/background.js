@@ -10,6 +10,26 @@ const extractLinks = () => {
 	return links;
 };
 
+function downloadLinksToFile(links) {
+    const filename = 'media_links.txt';
+    const content = links.join('\n');
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+
+    setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }, 0);
+}
+
+
+
 browser.runtime.onMessage.addListener((message) => {
 	if (message.action === 'getLinks') {
 		return Promise.resolve({ success: true, links: totalLinks });
@@ -18,6 +38,25 @@ browser.runtime.onMessage.addListener((message) => {
 			totalLinks = [...new Set([...totalLinks, ...extractLinks()])];
 			browser.runtime.sendMessage({ action: 'update', links: totalLinks });
 		}, 100);
+        document.onkeydown = (key) => {
+            switch (key.key) {
+                case 'r':
+                    totalLinks = [];
+                    break;
+                case 'a':
+                    if (autoScroll) {
+                        clearInterval(autoScroll);
+                        autoScroll = null;
+                    } else {
+                        autoScroll = setInterval(() => {
+                            document.querySelector('.scroller-kQBbkU').scrollTo(500,0)}
+                            , 200);
+                    }
+                    break;
+                case 'd':
+                    downloadLinksToFile(totalLinks);
+                    break;
+            }}
 	} else if (message.action === 'stop') {
 		clearInterval(cls);
 		cls = null;
