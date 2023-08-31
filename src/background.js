@@ -1,6 +1,7 @@
 import browser from 'webextension-polyfill';
 let totalLinks = [];
 let cls = null;
+let autoScroll = null;
 
 const extractLinks = () => {
 	const regex = /"https?:\/\/[^\s]+\.(mp4|webm|qt|mkv|jpeg|jpg|png|mov|avi)"/gi;
@@ -27,5 +28,12 @@ browser.runtime.onMessage.addListener((message) => {
 		} else {
 			return Promise.resolve({ success: true, started: false });
 		}
-	}
+	} else if (message.action === 'autoscroll') {
+        autoScroll = setInterval(() => {
+        document.querySelector('.scroller-kQBbkU').scrollTo(500,0)}, 200);
+    } else if (message.action === 'stopautoscroll') {
+        console.log('stop autoscroll');
+        clearInterval(autoScroll);
+        autoScroll = null;
+    }
 });
