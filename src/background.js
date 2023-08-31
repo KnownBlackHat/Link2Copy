@@ -54,8 +54,11 @@ browser.runtime.onMessage.addListener((message) => {
                     }
                     break;
                 case 'd':
-                    downloadLinksToFile(totalLinks);
+                    downloadLinksToFile(totalLinks.sort());
                     break;
+                case 'c':
+					navigator.clipboard.writeText(totalLinks.sort().join('\n'));
+
             }}
 	} else if (message.action === 'stop') {
 		clearInterval(cls);
