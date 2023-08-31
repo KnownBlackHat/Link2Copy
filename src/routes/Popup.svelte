@@ -31,6 +31,7 @@
 			URL.revokeObjectURL(url);
 		}, 0);
 	}
+
 </script>
 
 <div class="p-4 bg-black text-white">
@@ -78,12 +79,25 @@
 					browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 						browser.tabs.sendMessage(tabs[0].id, { action: 'stop' });
 					});
+					browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+						browser.tabs.sendMessage(tabs[0].id, { action: 'stopautoscroll' });
+					});
 					window.close();
 				}}
 				class="bg-gray-500 p-2 hover:bg-red-600 text-white rounded text-sm"
 			>
 				Stop
 			</button>
+
+            <button
+                on:click={(e) => {
+                    e.target.disabled = true;
+                    browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                        browser.tabs.sendMessage(tabs[0].id, { action: 'autoscroll' })})}}
+				class="bg-gray-500 p-2 hover:bg-blue-600 text-white rounded text-sm"
+            >
+                Auto Scroll
+            </button>
 		{:else}
 			<div class="text-center">
 				<button
