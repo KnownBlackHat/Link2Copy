@@ -31,7 +31,6 @@
 			URL.revokeObjectURL(url);
 		}, 0);
 	}
-
 </script>
 
 <div class="p-4 bg-black text-white">
@@ -89,15 +88,17 @@
 				Stop
 			</button>
 
-            <button
-                on:click={(e) => {
-                    e.target.disabled = true;
-                    browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                        browser.tabs.sendMessage(tabs[0].id, { action: 'autoscroll' })})}}
+			<button
+				on:click={(e) => {
+					e.target.disabled = true;
+					browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+						browser.tabs.sendMessage(tabs[0].id, { action: 'autoscroll' });
+					});
+				}}
 				class="bg-gray-500 p-2 hover:bg-blue-600 text-white rounded text-sm"
-            >
-                Auto Scroll
-            </button>
+			>
+				Auto Scroll
+			</button>
 		{:else}
 			<div class="text-center">
 				<button
@@ -115,9 +116,8 @@
 				</button>
 			</div>
 		{/if}
-	{:catch e}
+	{:catch}
 		<div class="text-center text-red-600">
-        {e}
 			Only works on <a href="https://discord.com/channels/@me">Discord</a>
 		</div>
 	{/await}
