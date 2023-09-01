@@ -73,6 +73,18 @@
 
 			<button
 				on:click={(e) => {
+					e.target.disabled = true;
+					browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+						browser.tabs.sendMessage(tabs[0].id, { action: 'autoscroll' });
+					});
+				}}
+				class="bg-gray-500 p-2 hover:bg-blue-600 text-white rounded text-sm"
+			>
+				Auto Scroll
+			</button>
+
+			<button
+				on:click={(e) => {
 					e.target.innerText = 'Stopped';
 					e.target.disabled = true;
 					browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -88,17 +100,6 @@
 				Stop
 			</button>
 
-			<button
-				on:click={(e) => {
-					e.target.disabled = true;
-					browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-						browser.tabs.sendMessage(tabs[0].id, { action: 'autoscroll' });
-					});
-				}}
-				class="bg-gray-500 p-2 hover:bg-blue-600 text-white rounded text-sm"
-			>
-				Auto Scroll
-			</button>
 		{:else}
 			<div class="text-center">
 				<button

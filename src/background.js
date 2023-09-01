@@ -28,6 +28,18 @@ function downloadLinksToFile(links) {
 	}, 0);
 }
 
+const notify = (message) => {
+    const msg_element = document.createElement('div');
+    msg_element.innerHTML = message;
+    msg_element.style = 'position: fixed; top: 0; right: 0; z-index: 9999; background: #000; color: #fff; padding: 10px; font-size: 20px;';
+    document.body.appendChild(msg_element);
+    setTimeout(() => {
+        document.body.removeChild(msg_element);
+    }
+    , 2000);
+};
+
+
 browser.runtime.onMessage.addListener((message) => {
 	if (message.action === 'getLinks') {
 		return Promise.resolve({ success: true, links: totalLinks });
@@ -40,28 +52,34 @@ browser.runtime.onMessage.addListener((message) => {
 			switch (key.key) {
 				case 'r':
 					totalLinks = [];
+                    notify('Links cleared');
 					break;
 				case 'a':
 					if (autoScroll) {
 						clearInterval(autoScroll);
 						autoScroll = null;
+                        notify('Auto scroll stopped');
 					} else {
 						autoScroll = setInterval(() => {
 							document.querySelector('.scroller-kQBbkU').scrollTo(500, 0);
 						}, 200);
+                        notify('Auto scroll started');
 					}
 					break;
 				case 'd':
 					downloadLinksToFile(totalLinks.sort());
+                    notify('Links downloaded');
 					break;
 				case 'c':
 					navigator.clipboard.writeText(totalLinks.sort().join('\n'));
+                    notify('Links copied to clipboard');
 			}
 		};
 	} else if (message.action === 'stop') {
 		clearInterval(cls);
 		cls = null;
 		totalLinks = [];
+        document.onkeydown = null;
 	} else if (message.action === 'status') {
 		if (cls) {
 			return Promise.resolve({ success: true, started: true });
