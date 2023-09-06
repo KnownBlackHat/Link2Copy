@@ -4,7 +4,7 @@ let cls = null;
 let autoScroll = null;
 
 const extractLinks = () => {
-	const regex = /"https?:\/\/[^\s]+\.(mp4|webm|qt|mkv|jpeg|jpg|png|mov|avi)"/gi;
+	const regex = /https?:\/\/[^(media)][^\s]+\.(mp4|webm|qt|mkv|jpeg|jpg|png|mov|avi)/gi
 	let links = [...new Set(document.querySelector('main').innerHTML.match(regex))];
 	links = links.map((v) => v.replace(/['"]/g, ''));
 	return links;
