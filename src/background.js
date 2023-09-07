@@ -15,7 +15,8 @@ const extractLinks = () => {
 };
 
 function downloadLinksToFile(links) {
-	const filename = 'media_links.txt';
+    const channel = document.querySelector('main').attributes['aria-label'].value.replace(' (channel)','')
+	const filename = `${channel}.txt`;
 	const content = links.join('\n');
 	const blob = new Blob([content], { type: 'text/plain' });
 	const url = URL.createObjectURL(blob);
