@@ -1,6 +1,7 @@
 <script>
 	import browser from 'webextension-polyfill';
 	let links = [];
+	let autoscroll_started = null;
 
 	browser.runtime.onMessage.addListener((message) => {
 		if (message.action === 'update') {
@@ -11,6 +12,7 @@
 	async function getStartStatus() {
 		const tabs = await browser.tabs.query({ active: true, currentWindow: true });
 		const response = await browser.tabs.sendMessage(tabs[0].id, { action: 'status' });
+		autoscroll_started = response.auto_scroll;
 		return response.started;
 	}
 
@@ -73,12 +75,22 @@
 
 			<button
 				on:click={(e) => {
-					e.target.disabled = true;
 					browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 						browser.tabs.sendMessage(tabs[0].id, { action: 'autoscroll' });
+						if (autoscroll_started) {
+							e.target.classList.remove('bg-red-500');
+							e.target.classList.add('bg-gray-500');
+							autoscroll_started = false;
+						} else {
+							e.target.classList.remove('bg-gray-500');
+							e.target.classList.add('bg-red-500');
+							autoscroll_started = true;
+						}
 					});
 				}}
-				class="bg-gray-500 p-2 hover:bg-blue-600 text-white rounded text-sm"
+				class={autoscroll_started
+					? 'bg-red-500 p-2 hover:bg-red-600 text-white rounded text-sm'
+					: 'bg-gray-500 p-2 hover:bg-blue-600 text-white rounded text-sm'}
 			>
 				Auto Scroll
 			</button>
@@ -90,16 +102,12 @@
 					browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 						browser.tabs.sendMessage(tabs[0].id, { action: 'stop' });
 					});
-					browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-						browser.tabs.sendMessage(tabs[0].id, { action: 'stopautoscroll' });
-					});
 					window.close();
 				}}
 				class="bg-gray-500 p-2 hover:bg-red-600 text-white rounded text-sm"
 			>
 				Stop
 			</button>
-
 		{:else}
 			<div class="text-center">
 				<button
