@@ -102,7 +102,7 @@
 					browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 						browser.tabs.sendMessage(tabs[0].id, { action: 'stop' });
 					});
-					window.reload();
+					window.location.reload();
 				}}
 				class="bg-gray-500 p-2 hover:bg-red-600 text-white rounded text-sm"
 			>
@@ -117,7 +117,7 @@
 						browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 							browser.tabs.sendMessage(tabs[0].id, { action: 'start' });
 						});
-						window.reload();
+						window.location.reload();
 					}}
 					class="bg-gray-500 text-center p-2 hover:bg-blue-600 text-white rounded text-sm"
 				>
