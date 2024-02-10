@@ -8,14 +8,16 @@ function scroll_e() {
 }
 
 const extractLinks = () => {
-	const regex = /https?:\/\/[^(media)][^\s]+\.(mp4|webm|qt|mkv|jpeg|jpg|png|mov|avi)/gi;
+	const regex = /(https?:\/\/media\.discordapp\.net[^\s]*)format/g;
 	let links = [...new Set(document.querySelector('main').innerHTML.match(regex))];
-	links = links.map((v) => v.replace(/['"]/g, ''));
+	links = links.map((v) => v.replace(/amp;/g, ''));
 	return links;
 };
 
 function downloadLinksToFile(links) {
-    const channel = document.querySelector('main').attributes['aria-label'].value.replace(' (channel)','')
+	const channel = document
+		.querySelector('main')
+		.attributes['aria-label'].value.replace(' (channel)', '');
 	const filename = `${channel}.txt`;
 	const content = links.join('\n');
 	const blob = new Blob([content], { type: 'text/plain' });
