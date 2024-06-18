@@ -3,7 +3,7 @@ let totalLinks = [];
 let cls = null;
 let autoScroll = null;
 function scroll_e() {
-	let scroll_element = document.querySelector('.scroller__1f96e');
+	let scroll_element = document.querySelector('div[dir="ltr"][tabindex="-1"]');
 	scroll_element.scrollTo(scroll_element.scrollTopMax, 0);
 }
 
